@@ -1,0 +1,27 @@
+{
+  "name": "com.greedyvox.ucc3ngo",
+  "version": "1.0.1",
+  "displayName": "GreedyVox NetCode For UCC3",
+  "description": "GreedyVox package for networking opsive Ultimate Character Controller 3.",
+  "unity": "2022.2",
+  "unityRelease": "0f1",
+  "keywords": [
+    "Network",
+    "Netcode",
+    "GameObjects",
+    "Opsive",
+    "Ultimate",
+    "Character",
+    "Controller"
+  ],
+  "author": {
+    "name": "Lawsy",
+    "email": "greedyvox@gmail.com"
+  },
+  "type": "tool",
+  "dependencies": {
+    "com.unity.netcode.gameobjects": "1.12.2",
+    "com.opsive.shared": "2.0.0",
+    "com.opsive.ultimatecharactercontroller": "3.2.2"
+  }
+}

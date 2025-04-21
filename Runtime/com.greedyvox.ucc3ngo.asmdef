@@ -1,0 +1,18 @@
+{
+    "name": "com.greedyvox.ucc3ngo",
+    "rootNamespace": "",
+    "references": [
+        "GUID:1491147abca9d7d4bb7105af628b223e",
+        "GUID:d8e89a79cd8df884b8d5b3356783eb74",
+        "GUID:cb7ef9d091ef9704cac35413bf140440"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

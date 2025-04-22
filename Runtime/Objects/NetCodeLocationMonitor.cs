@@ -227,13 +227,7 @@ namespace GreedyVox.NetCode.Objects
                 if ((m_Flag & (byte)TransformDirtyFlags.RigidbodyVelocity) != 0 && m_Rigidbody != null)
                 {
                     ByteUnpacker.ReadValuePacked(reader, out Vector3 velocity);
-#if UNITY_600_OR_NEWER
-                    m_Rigidbody.linearVelocity = velocity;
-#elif UNITY_2022_1_OR_NEWER
-#pragma warning disable CS0618
                     m_Rigidbody.velocity = velocity;
-#pragma warning restore CS0618
-#endif
                 }
             }
             if (m_SynchronizeRotation)
@@ -275,21 +269,11 @@ namespace GreedyVox.NetCode.Objects
                     m_Flag |= (byte)TransformDirtyFlags.Position;
                     m_NetworkPosition = m_Transform.position;
                 }
-#if UNITY_600_OR_NEWER
-                if (m_Rigidbody != null && m_NetworkRigidbodyVelocity != m_Rigidbody.linearVelocity)
-                {
-                    m_Flag |= (byte)TransformDirtyFlags.RigidbodyVelocity;
-                    m_NetworkRigidbodyVelocity = m_Rigidbody.linearVelocity;
-                }
-#elif UNITY_2022_1_OR_NEWER
-#pragma warning disable CS0618
                 if (m_Rigidbody != null && m_NetworkRigidbodyVelocity != m_Rigidbody.velocity)
                 {
                     m_Flag |= (byte)TransformDirtyFlags.RigidbodyVelocity;
                     m_NetworkRigidbodyVelocity = m_Rigidbody.velocity;
                 }
-#pragma warning restore CS0618
-#endif
             }
             if (m_SynchronizeRotation)
             {
@@ -336,13 +320,7 @@ namespace GreedyVox.NetCode.Objects
                     m_NetworkPosition = m_Transform.position;
                 }
                 if ((flag & (byte)TransformDirtyFlags.RigidbodyVelocity) != 0 && m_Rigidbody != null)
-#if UNITY_600_OR_NEWER
-                    BytePacker.WriteValuePacked(m_FastBufferWriter, m_Rigidbody.linearVelocity);
-#elif UNITY_2022_1_OR_NEWER
-#pragma warning disable CS0618 
                     BytePacker.WriteValuePacked(m_FastBufferWriter, m_Rigidbody.velocity);
-#pragma warning restore CS0618
-#endif
             }
             if (m_SynchronizeRotation)
             {

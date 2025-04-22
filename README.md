@@ -12,5 +12,5 @@ Basic networked setup for networking, if using BD for Ai, make sure BD is instal
 Setting up the player UCC prefab, use the tool menu to open up the dialog box, drag the Player prefab into the input field and than hit the Update Character button.
 
 Add package with Github URL
-https://github.com/GreedyVox/UCC3NGO.git
+https://github.com/GreedyVox/com.greedyvox.ucc3ngo.git
 

@@ -19,14 +19,11 @@ https://github.com/GreedyVox/com.greedyvox.ucc3ngo.git
 
 
 
-```
-<iframe width="560" height="315" src="https://youtu.be/UxfR8P-cGWs" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-```
+<p align="center"><kbd><a href="https://www.youtube.com/embed/UxfR8P-cGWs" target="_blank"><img src="https://user-images.githubusercontent.com/69744813/146674735-87a86fa0-ef98-453b-be55-3de15e8decda.png" alt="UCC3NGO" width="240" height="180" border="10"/></a></kbd></p>
 
-<iframe width="560" height="315" src="https://youtu.be/z4xLAKEFc1Q" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-```
-<iframe width="560" height="315" src="https://www.youtube.com/embed/video-id" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-```
+
+
+<p align="center"><kbd><a href="https://www.youtube.com/embed/z4xLAKEFc1Q" target="_blank"><img src="https://user-images.githubusercontent.com/69744813/146674735-87a86fa0-ef98-453b-be55-3de15e8decda.png" alt="UCC3NGO" width="240" height="180" border="10"/></a></kbd></p>
 
 

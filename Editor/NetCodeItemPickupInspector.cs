@@ -8,7 +8,7 @@ using Unity.Netcode;
 using UnityEditor;
 using UnityEngine;
 
-namespace YAARRGH.Battle.Island.Editors
+namespace GreedyVox.NetCode.Editors
 {
     /// <summary>
     /// Custom Unity Editor window for configuring multiple Pickup Item network items.
@@ -23,20 +23,13 @@ namespace YAARRGH.Battle.Island.Editors
         private static NetCodeItemPickupInspector Init() =>
         EditorWindow.GetWindowWithRect<NetCodeItemPickupInspector>(
             new Rect(Screen.width - 400 / 2, Screen.height - 200 / 2, 400, 200), true, "Network Pickup Item");
-        private GUIContent m_ContentScript, m_ContentVariable; // GUI labels with icons for script and variable sections
         private Object[] m_NetworkItem; // Array to store multiple dragged GameObjects
         private LayerMask m_LayerMask; // Layer mask for assigning layers to objects
         private Vector2 m_ScrollPosition; // Scroll position for the list of dropped items
         private const string IconErrorPath = "d_console.erroricon.sml"; // Path to error icon for notifications
         private const string IconIfoPath = "d_console.infoicon.sml"; // Path to info icon for notifications
-        private void OnEnable()
-        {
-            // Initialize GUI contents with labels and icons
-            m_ContentScript = new GUIContent(" SCRIPT", EditorGUIUtility.IconContent(IconIfoPath).image);
-            m_ContentVariable = new GUIContent(" VARIABLE", EditorGUIUtility.IconContent(IconIfoPath).image);
-            // Ensure m_NetworkItem is initialized as an empty array to avoid null reference issues
-            m_NetworkItem ??= new Object[0];
-        }
+        // Ensure m_NetworkItem is initialized as an empty array to avoid null reference issues
+        private void OnEnable() => m_NetworkItem ??= new Object[0];
         private void OnGUI()
         {
             // Display a header box for the Pickup Item prefabs section
@@ -80,13 +73,6 @@ namespace YAARRGH.Battle.Island.Editors
                 }
             }
             EditorGUILayout.Space();
-            EditorGUILayout.BeginVertical();
-            GUILayout.Box(m_ContentScript, GUILayout.ExpandWidth(true));
-            GUILayout.Label("The NetCodeGrenade Script", EditorStyles.boldLabel);
-            GUILayout.Box(m_ContentVariable, GUILayout.ExpandWidth(true));
-            GUILayout.Label("The m_InitializeOnEnaunity symbol version 6.0ble Variable", EditorStyles.boldLabel);
-            GUILayout.Box("The m_InitializeOnEnable variable on the NetCodeGrenade script, must be manually set to false for prevent overriding the projectile's position when spawning from the client.", GUILayout.ExpandWidth(true));
-            EditorGUILayout.EndVertical();
         }
         /// <summary>
         /// Handles drag-and-drop events to accept multiple objects dropped into the drop area.

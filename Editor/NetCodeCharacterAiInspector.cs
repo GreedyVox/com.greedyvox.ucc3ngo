@@ -116,12 +116,15 @@ namespace GreedyVox.NetCode.Editors
             // Certain components may be necessary if their single player components is added to the character.
             if (ComponentUtility.HasComponent<AttributeManager>(go))
                 ComponentUtility.TryAddComponent<NetCodeAttributeMonitor>(go);
-            if (ComponentUtility.HasComponent<Health>(go))
-                ComponentUtility.TryAddComponent<NetCodeHealthMonitor>(go);
             if (m_RemoverFound = ComponentUtility.TryRemoveComponent<Remover>(go))
                 ComponentUtility.TryAddComponent<NetCodeRemover>(go);
             if (ComponentUtility.HasComponent<Respawner>(go))
                 ComponentUtility.TryAddComponent<NetCodeRespawnerMonitor>(go);
+            if (ComponentUtility.TryAddGetComponent(go, out Health from)
+            && ComponentUtility.TryAddComponent(go, out NetCodeHealthMonitor to)
+            && !ComponentUtility.TryCopyNetworkedSpawnedObjects(from, to))
+                Debug.LogError($"Error copying networked spawned objects from {from} to {to}. " +
+                "Ensure that the Health component is properly set up with the NetCodeHealthMonitor component.");
 #if ULTIMATE_CHARACTER_CONTROLLER_MULTIPLAYER_BD_AI
             if (ComponentUtility.TryAddGetComponent<BehaviorTree>(go))
                 ComponentUtility.TryAddComponent<NetCodeAiBD>(go);

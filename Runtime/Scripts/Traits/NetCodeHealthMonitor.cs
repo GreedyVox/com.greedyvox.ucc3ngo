@@ -1,4 +1,5 @@
-﻿using GreedyVox.NetCode.Game;
+﻿using System.Collections.Generic;
+using GreedyVox.NetCode.Game;
 using Opsive.Shared.Game;
 using Opsive.UltimateCharacterController.Networking.Game;
 using Opsive.UltimateCharacterController.Objects;
@@ -15,7 +16,7 @@ namespace GreedyVox.NetCode.Traits
     public class NetCodeHealthMonitor : NetCodeHealthAbstract
     {
         [Tooltip("Spawn objects on death over the network.")]
-        [SerializeField] protected GameObject[] m_SpawnObjectsOnDeath;
+        [field: SerializeField] public List<GameObject> SpawnedObjectsOnDeath = new();
         public override void Die(Vector3 position, Vector3 force, GameObject attacker)
         {
             base.Die(position, force, attacker);
@@ -38,11 +39,11 @@ namespace GreedyVox.NetCode.Traits
         protected virtual void SpawnObjectsOnDeath(Vector3 position, Vector3 force)
         {
             // Spawn any objects on death, such as an explosion if the object is an explosive barrel.
-            if (m_SpawnObjectsOnDeath != null)
+            if (SpawnedObjectsOnDeath != null)
             {
-                for (int n = 0; n < m_SpawnObjectsOnDeath.Length; n++)
+                for (int n = 0; n < SpawnedObjectsOnDeath.Count; n++)
                 {
-                    var go = m_SpawnObjectsOnDeath[n];
+                    var go = SpawnedObjectsOnDeath[n];
                     var obj = ObjectPool.Instantiate(go, transform.position, transform.rotation);
                     if (obj == null || obj.GetComponent<NetworkObject>() == null)
                     {

@@ -81,8 +81,11 @@ namespace GreedyVox.NetCode.Editors
                                      EditorGUIUtility.IconContent(IconErrorPath).image), 15);
             if (ComponentUtility.HasComponent<AttributeManager>(go))
                 ComponentUtility.TryAddComponent<NetCodeAttributeMonitor>(go);
-            if (ComponentUtility.HasComponent<Health>(go))
-                ComponentUtility.TryAddComponent<NetCodeHealthMonitor>(go);
+            if (ComponentUtility.TryAddGetComponent(go, out Health from)
+            && ComponentUtility.TryAddComponent(go, out NetCodeHealthMonitor to)
+            && !ComponentUtility.TryCopyNetworkedSpawnedObjects(from, to))
+                Debug.LogError($"Error copying networked spawned objects from {from} to {to}. " +
+                "Ensure that the Health component is properly set up with the NetCodeHealthMonitor component.");
         }
     }
 }

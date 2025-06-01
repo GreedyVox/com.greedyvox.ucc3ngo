@@ -74,10 +74,13 @@ namespace GreedyVox.NetCode.Editors
             // Certain components may be necessary if their single player components is added to the character.
             if (ComponentUtility.HasComponent<AttributeManager>(go))
                 ComponentUtility.TryAddComponent<NetCodeAttributeMonitor>(go);
-            if (ComponentUtility.HasComponent<Health>(go))
-                ComponentUtility.TryAddComponent<NetCodeHealthMonitor>(go);
             if (ComponentUtility.HasComponent<Respawner>(go))
                 ComponentUtility.TryAddComponent<NetCodeRespawnerMonitor>(go);
+            if (ComponentUtility.TryAddGetComponent(go, out Health from)
+            && ComponentUtility.TryAddComponent(go, out NetCodeHealthMonitor to)
+            && !ComponentUtility.TryCopyNetworkedSpawnedObjects(from, to))
+                Debug.LogError($"Error copying networked spawned objects from {from} to {to}. " +
+                "Ensure that the Health component is properly set up with the NetCodeHealthMonitor component.");
             // The RemotePlayerPerspectiveMonitor will switch out the first person materials if the third person Perspective Monitor doesn't exist.
 #if THIRD_PERSON_CONTROLLER
             var addRemotePlayerPerspectiveMonitor = ComponentUtility.HasComponent<PerspectiveMonitor>(go);

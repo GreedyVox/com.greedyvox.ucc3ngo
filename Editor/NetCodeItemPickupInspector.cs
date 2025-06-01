@@ -128,10 +128,13 @@ namespace GreedyVox.NetCode.Editors
             // Add network monitors if AttributeManager or Health components are present
             if (ComponentUtility.HasComponent<AttributeManager>(go))
                 ComponentUtility.TryAddComponent<NetCodeAttributeMonitor>(go);
-            if (ComponentUtility.HasComponent<Health>(go))
-                ComponentUtility.TryAddComponent<NetCodeHealthMonitor>(go);
             if (!ComponentUtility.TryReplaceCopy<ItemPickup, NetCodeItemPickup>(go))
                 Debug.LogWarning($"Failed to replace ItemPickup with NetCodeItemPickup on {go.name}");
+            if (ComponentUtility.TryAddGetComponent(go, out Health from)
+            && ComponentUtility.TryAddComponent(go, out NetCodeHealthMonitor to)
+            && !ComponentUtility.TryCopyNetworkedSpawnedObjects(from, to))
+                Debug.LogError($"Error copying networked spawned objects from {from} to {to}. " +
+                "Ensure that the Health component is properly set up with the NetCodeHealthMonitor component.");
         }
         /// <summary>
         /// Recursively sets the layer for a GameObject and all its children.

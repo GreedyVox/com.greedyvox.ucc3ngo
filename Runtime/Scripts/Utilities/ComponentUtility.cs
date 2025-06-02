@@ -202,21 +202,34 @@ namespace GreedyVox.NetCode.Utilities
             }
             return false;
         }
+        public static bool TryGetSpawnedObjectsOnDeath(Health from, out List<GameObject> items)
+        {
+            var objs = from?.SpawnedObjectsOnDeath;
+            if (objs?.Length > 0)
+            {
+                items = new(objs);
+                return true;
+            }
+            items = default;
+            return false;
+        }
         public static bool TryCopyNetworkedSpawnedObjects(Health from, NetCodeHealthMonitor to)
         {
-            if (from == null || to == null) return false;
-            var items = new List<GameObject>(from.SpawnedObjectsOnDeath);
-            for (int i = items.Count - 1; i >= 0; i--)
+            if (to != null && TryGetSpawnedObjectsOnDeath(from, out var items))
             {
-                var item = items[i];
-                if (HasComponent<NetworkObject>(item))
+                for (int i = items.Count - 1; i >= 0; i--)
                 {
-                    to.SpawnedObjectsOnDeath.Add(item);
-                    items.RemoveAt(i);
+                    var item = items[i];
+                    if (HasComponent<NetworkObject>(item))
+                    {
+                        to.SpawnedObjectsOnDeath.Add(item);
+                        items.RemoveAt(i);
+                    }
                 }
+                from.SpawnedObjectsOnDeath = items.ToArray();
+                return true;
             }
-            from.SpawnedObjectsOnDeath = items.ToArray();
-            return true;
+            return false; ;
         }
     }
 }

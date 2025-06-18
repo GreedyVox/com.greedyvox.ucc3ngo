@@ -28,7 +28,6 @@ namespace GreedyVox.NetCode.Objects
         private int m_ActionIndex;
         private uint m_CastID;
         private PayloadMagicParticle m_Data;
-        public int NetworkID { get; set; }
         /// <summary>
         /// Returns the initialization data that is required when the object spawns. This allows the remote players to initialize the object correctly.
         /// </summary>
@@ -72,7 +71,6 @@ namespace GreedyVox.NetCode.Objects
         {
             return
                    FastBufferWriter.GetWriteSize<int>() +
-                   FastBufferWriter.GetWriteSize(NetworkID) +
                    FastBufferWriter.GetWriteSize(m_Data.OwnerID) +
                    FastBufferWriter.GetWriteSize(m_Data.CastID) +
                    FastBufferWriter.GetWriteSize(m_Data.SlotID) +

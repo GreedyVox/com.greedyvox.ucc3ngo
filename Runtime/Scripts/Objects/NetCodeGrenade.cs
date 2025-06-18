@@ -20,7 +20,6 @@ namespace GreedyVox.NetCode.Objects
         private const string m_StateName = "Grenade Network Impact";
         private ImpactDamageData m_DamageData = new();
         private PayloadGrenado m_Data;
-        public int NetworkID { get; set; }
         /// <summary>
         /// Initializes the object. This will be called from an object creating the projectile (such as a weapon).
         /// </summary>
@@ -49,8 +48,8 @@ namespace GreedyVox.NetCode.Objects
                 DamageAmount = m_ImpactDamageData.DamageAmount,
                 ImpactStateDisableTimer = m_ImpactDamageData.ImpactStateDisableTimer,
                 ScheduledDeactivation = m_ScheduledDeactivation != null ?
-                (m_ScheduledDeactivation.EndTime - Time.time) : -1,
-                NetCodeObject = m_Owner?.GetCachedComponent<NetworkObject>()
+                (m_ScheduledDeactivation.EndTime - Time.time) : -1.0f,
+                NetCodeObject = m_Owner.GetCachedComponent<NetworkObject>() ?? default
             };
         }
         /// <summary>
@@ -103,7 +102,6 @@ namespace GreedyVox.NetCode.Objects
         {
             return
             FastBufferWriter.GetWriteSize<int>() +
-            FastBufferWriter.GetWriteSize(NetworkID) +
             FastBufferWriter.GetWriteSize(m_Data.OwnerID) +
             FastBufferWriter.GetWriteSize(m_Data.Position) +
             FastBufferWriter.GetWriteSize(m_Data.Rotation) +

@@ -29,7 +29,14 @@ namespace GreedyVox.NetCode.Editors
         private const string IconErrorPath = "d_console.erroricon.sml"; // Path to error icon for notifications
         private const string IconIfoPath = "d_console.infoicon.sml"; // Path to info icon for notifications
         // Ensure m_NetworkItem is initialized as an empty array to avoid null reference issues
-        private void OnEnable() => m_NetworkItem ??= new Object[0];
+        private void OnEnable()
+        {
+            m_NetworkItem ??= new Object[0];
+            // Set default layer mask to "VisualEffect" if it exists
+            int visualEffectLayer = LayerMask.NameToLayer("VisualEffect");
+            if (visualEffectLayer != -1)
+                m_LayerMask = visualEffectLayer;
+        }
         private void OnGUI()
         {
             // Display a header box for the Pickup Item prefabs section

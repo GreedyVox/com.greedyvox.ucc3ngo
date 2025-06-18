@@ -13,10 +13,10 @@ namespace GreedyVox.NetCode.Data
         where T : IReaderWriter
         {
             serializer.SerializeValue(ref OwnerID);
+            serializer.SerializeValue(ref CastID);
             serializer.SerializeValue(ref SlotID);
             serializer.SerializeValue(ref ActionID);
             serializer.SerializeValue(ref ActionIndex);
-            serializer.SerializeValue(ref CastID);
         }
     }
 }

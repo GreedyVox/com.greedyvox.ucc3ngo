@@ -16,7 +16,6 @@ namespace GreedyVox.NetCode.Objects
     {
         private ImpactDamageData m_DamageData;
         private PayloadProjectile m_Data;
-        public int NetworkID { get; set; }
         /// <summary>
         /// Returns the initialization data that is required when the object spawns. This allows the remote players to initialize the object correctly.
         /// </summary>
@@ -91,7 +90,6 @@ namespace GreedyVox.NetCode.Objects
         {
             return
             FastBufferWriter.GetWriteSize<int>() +
-            FastBufferWriter.GetWriteSize(NetworkID) +
             FastBufferWriter.GetWriteSize(m_Data.OwnerID) +
             FastBufferWriter.GetWriteSize(m_Data.ProjectileID) +
             FastBufferWriter.GetWriteSize(m_Data.Velocity) +

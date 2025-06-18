@@ -8,7 +8,6 @@ using UnityEngine;
 namespace GreedyVox.NetCode
 {
     [DisallowMultipleComponent]
-    [RequireComponent(typeof(NetworkObject))]
     public class NetCodeInfo : NetworkBehaviour, INetworkInfo
     {
         /// <summary>

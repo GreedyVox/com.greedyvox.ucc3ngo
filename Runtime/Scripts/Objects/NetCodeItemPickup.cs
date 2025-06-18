@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using GreedyVox.NetCode.Data;
 using GreedyVox.NetCode.Interfaces;
 using Opsive.Shared.Game;
@@ -20,7 +19,6 @@ namespace GreedyVox.NetCode.Objects
     {
         private TrajectoryObject m_TrajectoryObject;
         private PayloadItemPickup m_Data;
-        public int NetworkID { get; set; }
         /// <summary>
         /// Initialize the default values.
         /// </summary>
@@ -37,12 +35,12 @@ namespace GreedyVox.NetCode.Objects
             var net = m_TrajectoryObject?.Owner.GetCachedComponent<NetworkObject>();
             m_Data = new PayloadItemPickup()
             {
-                ItemCount = m_ItemDefinitionAmounts.Length * 2 + (m_TrajectoryObject != null ? 2 : 0),
-                ItemID = m_ItemDefinitionAmounts.Select(items => (items.ItemIdentifier as ItemType).ID).ToArray(),
-                ItemAmounts = m_ItemDefinitionAmounts.Select(items => items.Amount).ToArray(),
                 OwnerID = net == null ? -1L : (long)net.OwnerClientId,
+                ItemCount = m_ItemDefinitionAmounts.Length,
+                ItemID = GetArrayDataIDs(m_ItemDefinitionAmounts),
+                ItemAmounts = GetArrayDataAmounts(m_ItemDefinitionAmounts),
                 Velocity = m_TrajectoryObject == null ? Vector3.zero : m_TrajectoryObject.Velocity,
-                Torque = m_TrajectoryObject == null ? Vector3.zero : m_TrajectoryObject.Torque
+                Torque = m_TrajectoryObject == null ? Vector3.zero : m_TrajectoryObject.Torque,
             };
         }
         /// <summary>
@@ -51,6 +49,20 @@ namespace GreedyVox.NetCode.Objects
         /// <param name="id">The id used to differentiate this projectile from others.</param>
         /// <param name="owner">The object that instantiated the trajectory object.</param>
         public void Initialize(uint id, GameObject own) { }
+        private int[] GetArrayDataAmounts(ItemIdentifierAmount[] items)
+        {
+            var dat = new int[items.Length];
+            for (var i = 0; i < dat.Length; i++)
+                dat[i] = items[i].Amount;
+            return dat;
+        }
+        private uint[] GetArrayDataIDs(ItemIdentifierAmount[] items)
+        {
+            var dat = new uint[items.Length];
+            for (var i = 0; i < dat.Length; i++)
+                dat[i] = (items[i].ItemIdentifier as ItemType).ID;
+            return dat;
+        }
         /// <summary>
         /// Returns the maximus size for the fast buffer writer
         /// </summary>               
@@ -58,13 +70,12 @@ namespace GreedyVox.NetCode.Objects
         {
             return
             FastBufferWriter.GetWriteSize<int>() +
-            FastBufferWriter.GetWriteSize(NetworkID) +
-            FastBufferWriter.GetWriteSize(m_Data.ItemCount) +
-            FastBufferWriter.GetWriteSize(m_Data.ItemID) +
-            FastBufferWriter.GetWriteSize(m_Data.ItemAmounts) +
             FastBufferWriter.GetWriteSize(m_Data.OwnerID) +
+            FastBufferWriter.GetWriteSize(m_Data.ItemCount) +
+            FastBufferWriter.GetWriteSize(m_Data.Torque) +
             FastBufferWriter.GetWriteSize(m_Data.Velocity) +
-            FastBufferWriter.GetWriteSize(m_Data.Torque);
+            FastBufferWriter.GetWriteSize(m_Data.ItemID ?? Array.Empty<uint>()) +
+            FastBufferWriter.GetWriteSize(m_Data.ItemAmounts ?? Array.Empty<int>());
         }
         /// <summary>
         /// The object has been spawned, write the payload data.

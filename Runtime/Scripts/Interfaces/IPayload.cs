@@ -5,7 +5,6 @@ namespace GreedyVox.NetCode.Interfaces
 {
     public interface IPayload
     {
-        public int NetworkID { get; set; }
         /// <summary>
         /// The object has been spawned, write the payload data.
         /// </summary>

@@ -8,14 +8,14 @@ namespace GreedyVox.NetCode.Data
         public uint OwnerID;
         public Vector3 Position;
         public Quaternion Rotation;
-        public Vector3 Torque;
         public Vector3 Velocity;
+        public Vector3 Torque;
         public int ImpactFrames;
         public int ImpactLayers;
         public float ImpactForce;
         public float DamageAmount;
-        public float ScheduledDeactivation;
         public float ImpactStateDisableTimer;
+        public float ScheduledDeactivation;
         public NetworkObjectReference NetCodeObject;
         public void NetworkSerialize<T>(BufferSerializer<T> serializer)
         where T : IReaderWriter
@@ -29,8 +29,8 @@ namespace GreedyVox.NetCode.Data
             serializer.SerializeValue(ref ImpactFrames);
             serializer.SerializeValue(ref ImpactForce);
             serializer.SerializeValue(ref DamageAmount);
-            serializer.SerializeValue(ref ScheduledDeactivation);
             serializer.SerializeValue(ref ImpactStateDisableTimer);
+            serializer.SerializeValue(ref ScheduledDeactivation);
             serializer.SerializeValue(ref NetCodeObject);
         }
     }

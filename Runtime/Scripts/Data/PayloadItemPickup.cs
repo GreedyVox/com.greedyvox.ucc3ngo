@@ -14,20 +14,19 @@ namespace GreedyVox.NetCode.Data
         public void NetworkSerialize<T>(BufferSerializer<T> serializer)
         where T : IReaderWriter
         {
-            serializer.SerializeValue(ref ItemCount);
             if (serializer.IsReader)
             {
                 ItemID = new uint[ItemCount];
                 ItemAmounts = new int[ItemCount];
             }
-            for (int n = 0; n < ItemCount; n++)
-            {
-                serializer.SerializeValue(ref ItemID[n]);
-                serializer.SerializeValue(ref ItemAmounts[n]);
-            }
             serializer.SerializeValue(ref OwnerID);
-            serializer.SerializeValue(ref Velocity);
+            serializer.SerializeValue(ref ItemCount);
             serializer.SerializeValue(ref Torque);
+            serializer.SerializeValue(ref Velocity);
+            for (int n = 0; n < ItemCount; n++)
+                serializer.SerializeValue(ref ItemID[n]);
+            for (int n = 0; n < ItemCount; n++)
+                serializer.SerializeValue(ref ItemAmounts[n]);
         }
     }
 }

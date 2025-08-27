@@ -7,6 +7,7 @@ using GreedyVox.NetCode.Character;
 using GreedyVox.NetCode.Traits;
 using GreedyVox.NetCode.Utilities;
 using Opsive.Shared.Input;
+using Opsive.Shared.Input.InputManager;
 using Opsive.UltimateCharacterController.Character;
 using Opsive.UltimateCharacterController.Character.Abilities;
 using Opsive.UltimateCharacterController.Character.Abilities.AI;

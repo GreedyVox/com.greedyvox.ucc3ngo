@@ -1,6 +1,6 @@
 {
   "name": "com.greedyvox.ucc3ngo",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "displayName": "GreedyVox NetCode For UCC3",
   "description": "GreedyVox package for networking opsive Ultimate Character Controller 3.",
   "unity": "2022.2",

@@ -1,3 +1,4 @@
+using GreedyVox.NetCode.Data;
 using GreedyVox.NetCode.Objects;
 using GreedyVox.NetCode.Traits;
 using GreedyVox.NetCode.Utilities;
@@ -22,9 +23,9 @@ namespace GreedyVox.NetCode.Editors
         [MenuItem("Tools/GreedyVox/NetCode/Items/Pickup Item Inspector")]
         private static NetCodeItemPickupInspector Init() =>
         EditorWindow.GetWindowWithRect<NetCodeItemPickupInspector>(
-            new Rect(Screen.width - 400 / 2, Screen.height - 200 / 2, 400, 200), true, "Network Pickup Item");
+            new Rect(Screen.width - 400 / 2, Screen.height - 200 / 2, 400, 400), true, "Network Pickup Item");
         private Object[] m_NetworkItem; // Array to store multiple dragged GameObjects
-        private LayerMask m_LayerMask; // Layer mask for assigning layers to objects
+        private LayerMask m_LayerMask; // Default layer mask (will be set to VisualEffect in OnEnable)
         private Vector2 m_ScrollPosition; // Scroll position for the list of dropped items
         private const string IconErrorPath = "d_console.erroricon.sml"; // Path to error icon for notifications
         private const string IconIfoPath = "d_console.infoicon.sml"; // Path to info icon for notifications
@@ -137,6 +138,7 @@ namespace GreedyVox.NetCode.Editors
             // Add network monitors if AttributeManager or Health components are present
             if (ComponentUtility.HasComponent<AttributeManager>(go))
                 ComponentUtility.TryAddComponent<NetCodeAttributeMonitor>(go);
+            ComponentUtility.TryAddComponent<PayloadItemPickupData>(go);
             if (!ComponentUtility.TryReplaceCopy<ItemPickup, NetCodeItemPickup>(go))
                 Debug.LogWarning($"Failed to replace ItemPickup with NetCodeItemPickup on {go.name}");
             if (ComponentUtility.TryAddGetComponent(go, out Health from)
